@@ -254,8 +254,8 @@
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const d = leer();
-      const configurado = form.action.includes('formspree.io/f/')
-                       && !form.action.includes('TU_ID_FORMSPREE');
+      const clave = ($('[name="access_key"]', form) || {}).value || '';
+      const configurado = !clave.includes('TU_CLAVE');
 
       if (!configurado) {
         if (!validar(d)) return;
@@ -279,11 +279,15 @@
           headers: { Accept: 'application/json' },
         });
 
-        // Formspree puede responder 200 y aun así rechazar el envío en el
-        // cuerpo (por ejemplo si el destinatario no está confirmado). Sin
-        // mirarlo, la página cantaría un éxito que nunca ocurrió.
+        // Un 200 no basta: estos servicios pueden aceptar la petición y aun así
+        // rechazar el envío en el cuerpo. Sin mirarlo, la página cantaría un
+        // éxito que nunca ocurrió. Se cubren las dos convenciones habituales:
+        // {success:false, message} de Web3Forms y {errors:[…]} de Formspree.
         const datos = await res.json().catch(() => ({}));
-        const errores = (datos.errors || []).map(x => x.message || x.code).filter(Boolean);
+        const errores = [
+          ...(datos.success === false ? [datos.message] : []),
+          ...(datos.errors || []).map(x => x.message || x.code),
+        ].filter(Boolean);
 
         if (!res.ok || errores.length) {
           console.error('[SolarUp] Formspree respondió', res.status, datos);

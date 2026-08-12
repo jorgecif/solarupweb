@@ -61,36 +61,51 @@ grep -rn "573166318848" index.html assets/js/main.js
 
 ---
 
-## 3. Envío del formulario por correo (Formspree)
+## 3. Envío del formulario por correo
 
-GitHub Pages no tiene servidor, así que el formulario usa [Formspree](https://formspree.io).
+GitHub Pages no tiene servidor, así que el formulario usa un servicio externo:
+**[Web3Forms](https://web3forms.com)** (gratuito, sin límite mensual, sin cuenta que crear).
 
-**Ya está configurado** con el formulario `mppadelj`, que entrega en `comercial@solarupsas.com`.
-El identificador vive en un único sitio, el atributo `action` de `index.html`:
+### Activarlo
+
+1. Entra a [web3forms.com](https://web3forms.com), escribe `comercial@solarupsas.com`
+   y pulsa *Create Access Key*. Te llega la clave por correo en segundos.
+2. En `index.html`, reemplaza `TU_CLAVE_WEB3FORMS` por esa clave:
 
 ```html
-<form class="form reveal" id="contactForm" action="https://formspree.io/f/mppadelj" method="POST">
+<input type="hidden" name="access_key" value="a1b2c3d4-...">
 ```
 
-Para cambiar de cuenta o de formulario, reemplaza solo ese ID. Si lo dejas como
-`TU_ID_FORMSPREE`, el JavaScript lo detecta y el botón vuelve a abrir el gestor de
-correo del visitante en lugar de enviar por AJAX.
+Ese campo es el **único punto de configuración**. Mientras diga `TU_CLAVE_WEB3FORMS`,
+el JavaScript lo detecta y el botón *Enviar por correo* abre el gestor de correo del
+visitante en lugar de enviar; así la página nunca finge un envío que no ocurrió.
 
-> El ID de Formspree es público por diseño: va en el HTML de cualquier sitio que lo use.
-> No es una credencial y no hay problema en versionarlo.
+> La clave es pública por diseño, igual que el ID de Formspree: va en el HTML de
+> cualquier sitio que use el servicio. No es una credencial.
 
-**En el panel de Formspree, revisa dos ajustes** (son la causa habitual de que un
-formulario "no llegue"):
+### Por qué no se usa Formspree
 
-- **reCAPTCHA desactivado.** Si está activo, el envío por AJAX se queda esperando un
-  desafío que la página nunca muestra. El honeypot `_gotcha` que ya trae el formulario
-  cubre el spam básico.
-- **Dominios permitidos.** Si restringes por dominio, incluye tanto
-  `jorgecif.github.io` como `solarupsas.com`.
+Se configuró primero con Formspree (formulario `mppadelj`) y **su filtro antispam
+archivaba todos los envíos legítimos**, incluidos los hechos desde el dominio real
+con datos verosímiles y después de marcar los anteriores como *Not spam*.
 
-Los campos llegan al correo con estos nombres: `nombre`, `telefono`, `email`, `ciudad`,
-`tipo`, `factura` y `mensaje`. El campo `email` lo usa Formspree como *responder a*,
-así que puedes contestar directamente desde tu bandeja.
+La API respondía `200 {"ok":true}` en cada intento: el rechazo ocurría después, sin
+avisar por la respuesta, así que no hay forma de detectarlo desde la web. Descartado
+el campo trampa como causa, se migró de servicio.
+
+Si algún día quieres volver, basta con reponer el `action` y los campos `_subject`
+y `_gotcha`; el manejador de respuestas ya entiende las dos convenciones
+(`{success:false}` de Web3Forms y `{errors:[…]}` de Formspree).
+
+### Campos
+
+Llegan al correo como `nombre`, `telefono`, `email`, `ciudad`, `tipo`, `factura`
+y `mensaje`. El campo `email` se usa como *responder a*, así que puedes contestar
+directamente desde tu bandeja.
+
+El formulario incluye una casilla trampa (`botcheck`) oculta: si llega marcada, el
+servicio descarta el envío. Es una casilla y no un campo de texto precisamente para
+que ningún autocompletado del navegador la rellene por accidente.
 
 ---
 

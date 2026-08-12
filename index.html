@@ -814,10 +814,14 @@
         </div>
       </div>
 
-      <!-- ENVÍO POR CORREO: endpoint de Formspree, entrega en comercial@solarupsas.com.
-           Es el único sitio donde vive el identificador; el JavaScript lo detecta solo.
-           Para cambiar de cuenta o de formulario, basta con reemplazar el ID de abajo. -->
-      <form class="form reveal" id="contactForm" action="https://formspree.io/f/mppadelj" method="POST">
+      <!-- ENVÍO POR CORREO: Web3Forms, entrega en comercial@solarupsas.com.
+           La clave de acceso está en el campo access_key de abajo y es el único
+           punto de configuración: el JavaScript deduce de ahí si el formulario
+           está listo. Mientras diga TU_CLAVE_WEB3FORMS, el botón abre el gestor
+           de correo del visitante en lugar de enviar.
+           Se migró desde Formspree, que archivaba como spam todos los envíos
+           legítimos pese a devolver "ok" (ver README). -->
+      <form class="form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
         <p class="form__title">Cuéntanos sobre tu proyecto</p>
 
         <div class="form__row">
@@ -870,8 +874,14 @@
           <textarea id="f-msg" name="mensaje" rows="3" placeholder="Cuéntanos qué necesitas: tipo de techo, consumo, si hay cortes de energía…"></textarea>
         </div>
 
-        <input type="hidden" name="_subject" value="Nueva solicitud de cotización — solarupsas.com">
-        <p class="form__hp" aria-hidden="true"><label>No llenar<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+        <!-- Pega aquí la clave que te envía web3forms.com. Es lo único que hay que cambiar. -->
+        <input type="hidden" name="access_key" value="TU_CLAVE_WEB3FORMS">
+        <input type="hidden" name="subject" value="Nueva solicitud de cotización — solarupsas.com">
+        <input type="hidden" name="from_name" value="Web SolarUp">
+
+        <!-- Trampa antibots de Web3Forms: si llega marcada, se descarta el envío.
+             Es una casilla, no un texto, para que ningún autocompletado la rellene. -->
+        <p class="form__hp" aria-hidden="true"><label>No marcar<input type="checkbox" name="botcheck" tabindex="-1"></label></p>
 
         <div class="form__actions">
           <button class="btn btn--sun btn--block" type="button" id="btnWa">
