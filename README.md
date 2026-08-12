@@ -72,24 +72,23 @@ grep -rn "573166318848" index.html assets/js/main.js
 
 ---
 
-## 3. Activar el envío del formulario por correo
+## 3. Envío del formulario por correo (Formspree)
 
-GitHub Pages no tiene servidor, así que el formulario necesita un servicio externo.
-**Mientras no lo configures el sitio funciona igual**: el botón *Enviar por correo* abre el
-gestor de correo del visitante con el mensaje ya escrito, y *Enviar por WhatsApp* funciona siempre.
+GitHub Pages no tiene servidor, así que el formulario usa [Formspree](https://formspree.io).
 
-Para que los envíos lleguen solos a `comercial@solarupsas.com`:
-
-1. Crea una cuenta gratuita en [formspree.io](https://formspree.io) y un formulario nuevo con ese correo.
-2. Te darán un endpoint como `https://formspree.io/f/xayzqwer`.
-3. En `index.html`, busca `TU_ID_FORMSPREE` y pega ahí tu ID. **Es el único sitio que se toca:**
+**Ya está configurado** con el formulario `mppadelj`, que entrega en `comercial@solarupsas.com`.
+El identificador vive en un único sitio, el atributo `action` de `index.html`:
 
 ```html
-<form class="form reveal" id="contactForm" action="https://formspree.io/f/xayzqwer" method="POST">
+<form class="form reveal" id="contactForm" action="https://formspree.io/f/mppadelj" method="POST">
 ```
 
-El JavaScript deduce del `action` que ya está configurado y pasa a enviar por AJAX,
-mostrando mensajes de éxito o error dentro de la misma página, sin recargar.
+Para cambiar de cuenta o de formulario, reemplaza solo ese ID. Si lo dejas como
+`TU_ID_FORMSPREE`, el JavaScript lo detecta y el botón vuelve a abrir el gestor de
+correo del visitante en lugar de enviar por AJAX.
+
+> El ID de Formspree es público por diseño: va en el HTML de cualquier sitio que lo use.
+> No es una credencial y no hay problema en versionarlo.
 
 **En el panel de Formspree, revisa dos ajustes** (son la causa habitual de que un
 formulario "no llegue"):
