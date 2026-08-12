@@ -814,9 +814,11 @@
         </div>
       </div>
 
-      <!-- Para activar el envío por correo: crea un formulario gratis en https://formspree.io
-           y reemplaza TU_ID_FORMSPREE por el identificador que te entreguen. -->
-      <form class="form reveal" id="contactForm" action="https://formspree.io/f/TU_ID_FORMSPREE" method="POST" data-formspree-id="TU_ID_FORMSPREE">
+      <!-- ENVÍO POR CORREO: pega aquí tu endpoint de Formspree, reemplazando
+           TU_ID_FORMSPREE por el identificador de tu formulario. Es el único
+           sitio que hay que tocar; el JavaScript lo detecta solo.
+           Mientras diga TU_ID_FORMSPREE, el botón abre el gestor de correo. -->
+      <form class="form reveal" id="contactForm" action="https://formspree.io/f/TU_ID_FORMSPREE" method="POST">
         <p class="form__title">Cuéntanos sobre tu proyecto</p>
 
         <div class="form__row">

@@ -249,20 +249,21 @@
       window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(componer(d))}`, '_blank', 'noopener');
     });
 
-    // Envío por correo (Formspree si está configurado; si no, cliente de correo)
+    // Envío por correo (Formspree si está configurado; si no, cliente de correo).
+    // El estado se deduce del atributo action: no hay nada más que sincronizar.
     form.addEventListener('submit', async e => {
+      e.preventDefault();
       const d = leer();
-      const configurado = !form.dataset.formspreeId.startsWith('TU_ID');
+      const configurado = form.action.includes('formspree.io/f/')
+                       && !form.action.includes('TU_ID_FORMSPREE');
 
       if (!configurado) {
-        e.preventDefault();
         if (!validar(d)) return;
         avisar('Abriendo tu cliente de correo…', 'is-ok');
         location.href = `mailto:${EMAIL}?subject=${encodeURIComponent('Solicitud de cotización — ' + d.nombre)}&body=${encodeURIComponent(componer(d))}`;
         return;
       }
 
-      e.preventDefault();
       if (!validar(d)) return;
 
       const btn = $('#btnMail');

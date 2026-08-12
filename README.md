@@ -81,15 +81,28 @@ gestor de correo del visitante con el mensaje ya escrito, y *Enviar por WhatsApp
 Para que los envíos lleguen solos a `comercial@solarupsas.com`:
 
 1. Crea una cuenta gratuita en [formspree.io](https://formspree.io) y un formulario nuevo con ese correo.
-2. Te darán un ID como `xayzqwer`.
-3. En `index.html` reemplaza **las dos apariciones** de `TU_ID_FORMSPREE`:
+2. Te darán un endpoint como `https://formspree.io/f/xayzqwer`.
+3. En `index.html`, busca `TU_ID_FORMSPREE` y pega ahí tu ID. **Es el único sitio que se toca:**
 
 ```html
-<form ... action="https://formspree.io/f/xayzqwer" data-formspree-id="xayzqwer">
+<form class="form reveal" id="contactForm" action="https://formspree.io/f/xayzqwer" method="POST">
 ```
 
-El JavaScript detecta solo que ya está configurado y pasa a enviar por AJAX, mostrando
-mensajes de éxito o error dentro de la misma página.
+El JavaScript deduce del `action` que ya está configurado y pasa a enviar por AJAX,
+mostrando mensajes de éxito o error dentro de la misma página, sin recargar.
+
+**En el panel de Formspree, revisa dos ajustes** (son la causa habitual de que un
+formulario "no llegue"):
+
+- **reCAPTCHA desactivado.** Si está activo, el envío por AJAX se queda esperando un
+  desafío que la página nunca muestra. El honeypot `_gotcha` que ya trae el formulario
+  cubre el spam básico.
+- **Dominios permitidos.** Si restringes por dominio, incluye tanto
+  `TU_USUARIO.github.io` como `solarupsas.com`.
+
+Los campos llegan al correo con estos nombres: `nombre`, `telefono`, `email`, `ciudad`,
+`tipo`, `factura` y `mensaje`. El campo `email` lo usa Formspree como *responder a*,
+así que puedes contestar directamente desde tu bandeja.
 
 ---
 
