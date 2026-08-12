@@ -278,10 +278,22 @@
           body: new FormData(form),
           headers: { Accept: 'application/json' },
         });
-        if (!res.ok) throw new Error('respuesta ' + res.status);
+
+        // Formspree puede responder 200 y aun así rechazar el envío en el
+        // cuerpo (por ejemplo si el destinatario no está confirmado). Sin
+        // mirarlo, la página cantaría un éxito que nunca ocurrió.
+        const datos = await res.json().catch(() => ({}));
+        const errores = (datos.errors || []).map(x => x.message || x.code).filter(Boolean);
+
+        if (!res.ok || errores.length) {
+          console.error('[SolarUp] Formspree respondió', res.status, datos);
+          throw new Error(errores.join(' · ') || 'respuesta ' + res.status);
+        }
+
         form.reset();
         avisar('¡Gracias! Recibimos tu solicitud y te contactaremos muy pronto.', 'is-ok');
-      } catch {
+      } catch (err) {
+        console.error('[SolarUp] Fallo al enviar el formulario:', err);
         avisar(`No pudimos enviar el formulario. Escríbenos a ${EMAIL} o por WhatsApp.`, 'is-err');
       } finally {
         btn.disabled = false;
