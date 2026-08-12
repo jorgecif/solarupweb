@@ -66,17 +66,19 @@ grep -rn "573166318848" index.html assets/js/main.js
 GitHub Pages no tiene servidor, así que el formulario usa un servicio externo:
 **[Web3Forms](https://web3forms.com)** (gratuito, sin límite mensual, sin cuenta que crear).
 
-### Activarlo
+### Configuración
 
-1. Entra a [web3forms.com](https://web3forms.com), escribe `comercial@solarupsas.com`
-   y pulsa *Create Access Key*. Te llega la clave por correo en segundos.
-2. En `index.html`, reemplaza `TU_CLAVE_WEB3FORMS` por esa clave:
+**Ya está configurado** y entrega en `comercial@solarupsas.com`. La clave vive en un
+campo oculto de `index.html`:
 
 ```html
-<input type="hidden" name="access_key" value="a1b2c3d4-...">
+<input type="hidden" name="access_key" value="c166444f-...">
 ```
 
-Ese campo es el **único punto de configuración**. Mientras diga `TU_CLAVE_WEB3FORMS`,
+Para cambiar el destino, saca una clave nueva en [web3forms.com](https://web3forms.com)
+con el correo que quieras y reemplaza ese valor.
+
+Ese campo es el **único punto de configuración**. Si lo dejas como `TU_CLAVE_WEB3FORMS`,
 el JavaScript lo detecta y el botón *Enviar por correo* abre el gestor de correo del
 visitante en lugar de enviar; así la página nunca finge un envío que no ocurrió.
 
