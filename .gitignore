@@ -1,0 +1,10 @@
+# Material original de la marca: se conserva en local, no se publica en la web.
+# Si prefieres versionarlo, borra estas dos líneas.
+Info SolarUp/
+
+# Ajustes locales de Claude Code (permisos de esta máquina)
+.claude/settings.local.json
+
+# Sistema
+Thumbs.db
+.DS_Store
