@@ -5,40 +5,31 @@ HTML, CSS y JavaScript puros: **no hay que compilar nada**. Se publica subiendo 
 
 ---
 
-## 1. Publicar en GitHub Pages
+## 1. Publicar
 
-### Primera vez
-
-1. Crea un repositorio nuevo en GitHub (por ejemplo `solarup-web`), **público**.
-2. Desde esta carpeta:
-
-```bash
-git init -b main
-```
-
-```bash
-git add . && git commit -m "Sitio web SolarUp"
-```
-
-```bash
-git remote add origin https://github.com/TU_USUARIO/solarup-web.git && git push -u origin main
-```
-
-3. En GitHub: **Settings → Pages → Build and deployment**
-   - *Source*: `Deploy from a branch`
-   - *Branch*: `main` · carpeta `/ (root)` → **Save**
-4. En 1–2 minutos el sitio queda en `https://TU_USUARIO.github.io/solarup-web/`
-
-### Actualizaciones posteriores
+El repositorio es **[jorgecif/solarupweb](https://github.com/jorgecif/solarupweb)** y GitHub Pages
+ya está activo, sirviendo la rama `main` desde la raíz. Para publicar cambios basta con:
 
 ```bash
 git add . && git commit -m "Actualiza contenido" && git push
 ```
 
-### Dominio propio (solarupsas.com)
+Cada push dispara un despliegue; en 1–2 minutos está en línea.
 
-1. En **Settings → Pages → Custom domain** escribe `solarupsas.com` y guarda.
-2. En el panel de tu dominio crea estos registros DNS:
+### Direcciones
+
+| | |
+|---|---|
+| Dominio propio | `https://solarupsas.com` (definido en el archivo `CNAME`) |
+| Dirección de GitHub | `https://jorgecif.github.io/solarupweb/` |
+
+> **No borres el archivo `CNAME`.** Es lo que mantiene el dominio propio; si desaparece
+> de la rama publicada, el sitio vuelve a la dirección `github.io`.
+
+### DNS del dominio
+
+Para que `solarupsas.com` apunte a GitHub Pages, estos registros deben existir
+en el panel del dominio:
 
 | Tipo | Nombre | Valor |
 |---|---|---|
@@ -46,15 +37,13 @@ git add . && git commit -m "Actualiza contenido" && git push
 | A | `@` | `185.199.109.153` |
 | A | `@` | `185.199.110.153` |
 | A | `@` | `185.199.111.153` |
-| CNAME | `www` | `TU_USUARIO.github.io` |
+| CNAME | `www` | `jorgecif.github.io` |
 
-3. Cuando el DNS propague, activa **Enforce HTTPS**.
+Cuando el DNS propague, activa **Enforce HTTPS** en Settings → Pages.
 
-> Si publicas en un subdirectorio (`usuario.github.io/solarup-web/`), el sitio funciona igual:
-> todas las rutas son relativas. La única excepción es `404.html`, que usa rutas absolutas
-> y solo se ve bien con dominio propio.
-
----
+> Mientras el dominio propio no resuelva, el sitio se ve en `jorgecif.github.io/solarupweb/`
+> y todo funciona salvo `404.html`, que usa rutas absolutas y solo se ve completo
+> desde la raíz del dominio.
 
 ## 2. Cosas que debes revisar antes de publicar
 
@@ -97,7 +86,7 @@ formulario "no llegue"):
   desafío que la página nunca muestra. El honeypot `_gotcha` que ya trae el formulario
   cubre el spam básico.
 - **Dominios permitidos.** Si restringes por dominio, incluye tanto
-  `TU_USUARIO.github.io` como `solarupsas.com`.
+  `jorgecif.github.io` como `solarupsas.com`.
 
 Los campos llegan al correo con estos nombres: `nombre`, `telefono`, `email`, `ciudad`,
 `tipo`, `factura` y `mensaje`. El campo `email` lo usa Formspree como *responder a*,
