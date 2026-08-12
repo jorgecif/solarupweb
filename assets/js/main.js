@@ -9,7 +9,7 @@
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
   /* Datos de contacto en un solo lugar --------------------------------- */
-  const WHATSAPP = '573237255414';
+  const WHATSAPP = '573166318848';
   const EMAIL    = 'comercial@solarupsas.com';
 
   /* Supuestos de la calculadora (validados contra los kits reales:

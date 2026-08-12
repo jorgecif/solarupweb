@@ -60,14 +60,14 @@ git add . && git commit -m "Actualiza contenido" && git push
 
 | Qué | Dónde | Nota |
 |---|---|---|
-| **Número de WhatsApp** | `assets/js/main.js` (const `WHATSAPP`) y los `wa.me/` de `index.html` | Está puesto **573237255414** (323 725 5414). Verifica que ese sea el que recibe WhatsApp. |
+| **Número de WhatsApp** | `assets/js/main.js` (const `WHATSAPP`) y los `wa.me/` de `index.html` | Está puesto **573166318848** (316 631 8848). Verifica que ese sea el que recibe WhatsApp. |
 | **Formulario por correo** | `index.html`, atributo `action` del `<form id="contactForm">` | Ver punto 3. |
 | **Dominio en los metadatos** | `index.html` (`canonical`, `og:url`, JSON-LD), `sitemap.xml`, `robots.txt` | Cambia `https://solarupsas.com/` si usas otra URL. |
 
 Buscar y reemplazar el número en todo el proyecto:
 
 ```bash
-grep -rn "573237255414" index.html assets/js/main.js
+grep -rn "573166318848" index.html assets/js/main.js
 ```
 
 ---
