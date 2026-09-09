@@ -32,6 +32,13 @@
   };
   const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
 
+  /* Preferencias del visitante que condicionan la reproducción automática */
+  const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)');
+  const ahorroDeDatos = () => {
+    const c = navigator.connection;
+    return !!c && (c.saveData || /^(slow-)?2g$/.test(c.effectiveType || ''));
+  };
+
 
   /* ── Header: estado al hacer scroll ────────────────────────────────── */
   const hdr = $('#hdr');
@@ -307,7 +314,61 @@
   }
 
 
-  /* ── Lightbox de galería ───────────────────────────────────────────── */
+  /* ── Video de fondo del hero ───────────────────────────────────────── */
+  // Solo en pantallas grandes: son ~1,5 MB que no tiene sentido gastar en datos
+  // móviles cuando la foto de portada ya comunica lo mismo.
+  const heroBg = $('.hero__bg[data-video]');
+  if (heroBg && !sinMovimiento.matches && matchMedia('(min-width:1024px)').matches && !ahorroDeDatos()) {
+    const v = document.createElement('video');
+    Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' });
+    // Safari mira el atributo, no solo la propiedad, para permitir el autoplay
+    v.setAttribute('muted', '');
+    v.setAttribute('aria-hidden', 'true');
+    v.src = heroBg.dataset.video;
+    v.addEventListener('canplay', () => {
+      v.play().then(() => v.classList.add('is-playing')).catch(() => v.remove());
+    }, { once: true });
+    v.addEventListener('error', () => v.remove(), { once: true });
+    heroBg.append(v);
+  }
+
+
+  /* ── Vista previa de proyectos al pasar el cursor ───────────────────── */
+  // El video solo se descarga cuando el visitante muestra interés real.
+  // En táctil no hay hover: allí se toca y se abre directamente el visor.
+  if (!sinMovimiento.matches && matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    $$('.pj__media[data-video]').forEach(media => {
+      let v = null;
+      let cancelado = false;
+
+      media.addEventListener('pointerenter', () => {
+        cancelado = false;
+        if (v) { v.play().catch(() => {}); return; }
+        v = document.createElement('video');
+        Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' });
+        v.setAttribute('muted', '');
+        v.setAttribute('aria-hidden', 'true');
+        v.src = media.dataset.video;
+        v.addEventListener('canplay', () => {
+          if (cancelado) return;
+          v.play().then(() => v.classList.add('is-playing')).catch(() => {});
+        }, { once: true });
+        v.addEventListener('error', () => { v.remove(); v = null; }, { once: true });
+        media.prepend(v);
+      });
+
+      media.addEventListener('pointerleave', () => {
+        cancelado = true;
+        if (!v) return;
+        v.pause();
+        v.classList.remove('is-playing');
+        v.currentTime = 0;
+      });
+    });
+  }
+
+
+  /* ── Lightbox de proyectos y equipo ────────────────────────────────── */
   const lb        = $('#lightbox');
   const lbStage   = $('#lightboxStage');
   const lbCaption = $('#lightboxCaption');
@@ -331,22 +392,14 @@
     if (lastFocus) lastFocus.focus();
   };
 
-  $$('.gitem').forEach(item => {
+  $$('[data-video]:is(button)').forEach(item => {
     item.addEventListener('click', () => {
       lastFocus = item;
-      const caption = item.dataset.caption || '';
-      const video   = item.dataset.video;
-
-      if (video) {
-        const poster = $('img', item).getAttribute('src');
-        abrirLb(
-          `<video src="${video}" poster="${poster}" controls autoplay playsinline preload="metadata"></video>`,
-          caption
-        );
-      } else {
-        const alt = ($('img', item) || {}).alt || caption;
-        abrirLb(`<img src="${item.dataset.full}" alt="${alt.replace(/"/g, '&quot;')}">`, caption);
-      }
+      const poster = ($('img', item) || {}).getAttribute?.('src') || '';
+      abrirLb(
+        `<video src="${item.dataset.video}" poster="${poster}" controls autoplay playsinline preload="metadata"></video>`,
+        item.dataset.caption || ''
+      );
     });
   });
 

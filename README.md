@@ -117,12 +117,18 @@ que ningún autocompletado del navegador la rellene por accidente.
 index.html              Toda la página (una sola vista con anclas)
 404.html                Página de error
 assets/css/styles.css   Estilos, con los tokens de marca al inicio
-assets/js/main.js       Menú, calculadora, galería, formulario
+assets/js/main.js       Menú, calculadora, videos, visor, formulario
 assets/img/             Imágenes optimizadas en WebP
-assets/video/           Reel comprimido (8 MB → 1,7 MB) + su miniatura
+assets/img/equipo/      Fotos del equipo técnico y de los equipos instalados
+assets/video/           Video de fondo del hero y video del equipo
+assets/video/proyectos/ Un clip y su portada por cada instalación
 assets/icons/           Favicons
+.claude/devserver.py    Servidor local sin caché (ver punto 6)
 Info SolarUp/           Material original (excluido del repo por .gitignore)
 ```
+
+Secciones, en orden: hero · franja de confianza · **proyectos** · servicios ·
+soluciones · calculadora · beneficios · proceso · **equipo** · preguntas · contacto.
 
 **Colores de marca** (muestreados del logotipo original), definidos en `:root`:
 
@@ -131,6 +137,49 @@ Info SolarUp/           Material original (excluido del repo por .gitignore)
 | `--sun` | `#FED317` |
 | `--sun-deep` | `#DCB20D` |
 | `--ink` | `#08080A` |
+
+---
+
+## 4b. Proyectos y videos
+
+Cada tarjeta de proyecto vive en `index.html` dentro de `.pjs`. Para añadir una
+instalación nueva basta con copiar un `<article class="pj">` y cambiar tres cosas:
+
+```html
+<button class="pj__media" type="button"
+        data-video="assets/video/proyectos/MUNICIPIO-DEPARTAMENTO.mp4"
+        data-caption="Texto que aparece bajo el video ampliado">
+  <img src="assets/video/proyectos/MUNICIPIO-DEPARTAMENTO.webp" alt="…">
+  <span class="pj__lugar">… Municipio · <b>Departamento</b></span>
+```
+
+La etiqueta `.pj__lugar` es la que muestra la ubicación sobre el video y se mantiene
+visible durante la reproducción.
+
+**Para añadir potencia y tipo de sistema** a una tarjeta que aún no los tiene, se
+copia el bloque `.pj__pie` de la tarjeta destacada (Los Andes) y se ajustan los
+valores. Sin ese bloque, la tarjeta muestra solo la ubicación.
+
+**Cómo se comportan los videos.** Con `preload="none"` implícito: la página solo
+descarga la imagen de portada. El clip se pide cuando el visitante pasa el cursor
+por encima (escritorio) o toca la tarjeta (móvil). Quien no interactúe con ningún
+proyecto no descarga ni un byte de video.
+
+**Preparar un clip nuevo** desde el original:
+
+```bash
+ffmpeg -i original.mp4 -an -vf scale=960:-2 -c:v libx264 -profile:v main -crf 30 -preset slow -pix_fmt yuv420p -movflags +faststart salida.mp4
+```
+
+```bash
+ffmpeg -ss 3 -i original.mp4 -frames:v 1 -vf scale=960:-2 portada.png
+```
+
+`-an` quita el audio: son tomas de dron y la reproducción automática exige silencio
+de todas formas. Un clip de 10 s queda en torno a 900 KB.
+
+El video de fondo del hero solo se carga en pantallas de 1024 px o más, y nunca si
+el navegador pide reducir el movimiento o el sistema tiene el ahorro de datos activo.
 
 ---
 
@@ -155,8 +204,15 @@ proveedor de paneles, actualiza `W_POR_PANEL`.
 ## 6. Ver el sitio en local
 
 ```bash
-python -m http.server 4173
+python .claude/devserver.py
 ```
 
-Luego abre `http://localhost:4173`. (Abrir `index.html` con doble clic también funciona,
-pero algunas cosas se comportan mejor sobre `http://`.)
+Luego abre `http://localhost:4173`.
+
+Es `http.server` con las cabeceras de caché desactivadas. Con el servidor estándar de
+Python el navegador se queda con el CSS y el JS en memoria y sigue mostrando la versión
+anterior aunque el archivo haya cambiado, lo que hace perder tiempo depurando cambios
+que en realidad ya estaban aplicados.
+
+> Lo mismo pasa en producción, pero con un límite de 10 minutos: tras publicar,
+> revisa siempre con **Ctrl + Shift + R** o esperarás a que expire la caché.

@@ -4,7 +4,7 @@
     {
       "name": "solarup",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "4173"],
+      "runtimeArgs": [".claude/devserver.py", "4173"],
       "port": 4173
     }
   ]

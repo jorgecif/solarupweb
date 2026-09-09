@@ -200,11 +200,12 @@
 
     <nav class="nav" id="nav" aria-label="Navegación principal">
       <ul class="nav__list">
+        <li><a href="#proyectos">Proyectos</a></li>
         <li><a href="#servicios">Servicios</a></li>
         <li><a href="#soluciones">Soluciones</a></li>
-        <li><a href="#calculadora">Calcula tu ahorro</a></li>
+        <li><a href="#calculadora">Calculadora</a></li>
         <li><a href="#proceso">Proceso</a></li>
-        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#equipo">Equipo</a></li>
         <li><a href="#faq">Preguntas</a></li>
       </ul>
       <div class="nav__cta">
@@ -226,7 +227,9 @@
 
 <!-- ══════════════ HERO ══════════════ -->
 <section class="hero" id="inicio">
-  <div class="hero__bg">
+  <!-- La foto es la portada; el JavaScript inserta el video encima solo en
+       pantallas grandes y si el visitante no pidió reducir el movimiento. -->
+  <div class="hero__bg" data-video="assets/video/hero-solarup.mp4">
     <img src="assets/img/hero-paneles.webp" alt="" width="1440" height="834" fetchpriority="high" decoding="async">
   </div>
   <div class="hero__glow" aria-hidden="true"></div>
@@ -298,6 +301,112 @@
     </ul>
   </div>
 </div>
+
+
+<!-- ══════════════ PROYECTOS ══════════════ -->
+<section class="sec sec--ink proyectos" id="proyectos">
+  <div class="wrap">
+    <header class="sec__head reveal">
+      <p class="kicker kicker--sun">Proyectos instalados</p>
+      <h2 class="sec__title">Sistemas que ya están <em>generando</em></h2>
+      <p class="sec__lead">
+        Instalaciones nuestras, grabadas en sitio. Toca cualquiera para verla completa.
+      </p>
+    </header>
+
+    <div class="pjs">
+      <article class="pj pj--destacado reveal">
+        <button class="pj__media" type="button"
+                data-video="assets/video/proyectos/los-andes-magdalena.mp4"
+                data-caption="Sistema Off Grid de 28,8 kW — Los Andes, Magdalena">
+          <img src="assets/video/proyectos/los-andes-magdalena.webp"
+               alt="Vista aérea de la cubierta con paneles solares del proyecto en Los Andes, Magdalena"
+               width="960" height="540" loading="lazy" decoding="async">
+          <span class="pj__tipo">Off Grid</span>
+          <span class="pj__lugar">
+            <svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>
+            Los Andes · <b>Magdalena</b>
+          </span>
+          <span class="pj__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+        </button>
+        <div class="pj__pie">
+          <h3 class="pj__nombre">Sistema Off Grid de 28,8&nbsp;kW</h3>
+          <ul class="pj__specs">
+            <li><svg class="ico" aria-hidden="true"><use href="#i-bolt"/></svg><b>28,8 kW</b> de potencia</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-offgrid"/></svg>Independiente de la red</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="pj reveal">
+        <button class="pj__media" type="button"
+                data-video="assets/video/proyectos/cimitarra-santander.mp4"
+                data-caption="Instalación en cubierta — Cimitarra, Santander">
+          <img src="assets/video/proyectos/cimitarra-santander.webp"
+               alt="Vista aérea de paneles solares instalados sobre una cubierta en Cimitarra, Santander"
+               width="960" height="540" loading="lazy" decoding="async">
+          <span class="pj__lugar">
+            <svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>
+            Cimitarra · <b>Santander</b>
+          </span>
+          <span class="pj__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+        </button>
+      </article>
+
+      <article class="pj reveal">
+        <button class="pj__media" type="button"
+                data-video="assets/video/proyectos/giron-santander.mp4"
+                data-caption="Instalación residencial — Girón, Santander">
+          <img src="assets/video/proyectos/giron-santander.webp"
+               alt="Vista aérea de paneles solares sobre una vivienda en Girón, Santander"
+               width="960" height="540" loading="lazy" decoding="async">
+          <span class="pj__lugar">
+            <svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>
+            Girón · <b>Santander</b>
+          </span>
+          <span class="pj__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+        </button>
+      </article>
+
+      <article class="pj reveal">
+        <button class="pj__media" type="button"
+                data-video="assets/video/proyectos/bucaramanga-santander.mp4"
+                data-caption="Instalación residencial — Bucaramanga, Santander">
+          <img src="assets/video/proyectos/bucaramanga-santander.webp"
+               alt="Vista aérea de paneles solares sobre una vivienda en Bucaramanga, Santander"
+               width="960" height="540" loading="lazy" decoding="async">
+          <span class="pj__lugar">
+            <svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>
+            Bucaramanga · <b>Santander</b>
+          </span>
+          <span class="pj__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+        </button>
+      </article>
+
+      <article class="pj reveal">
+        <button class="pj__media" type="button"
+                data-video="assets/video/proyectos/tenjo-cundinamarca.mp4"
+                data-caption="Cubierta solar para parqueadero — Tenjo, Cundinamarca">
+          <img src="assets/video/proyectos/tenjo-cundinamarca.webp"
+               alt="Cubierta solar sobre un parqueadero en Tenjo, Cundinamarca"
+               width="960" height="540" loading="lazy" decoding="async">
+          <span class="pj__tipo">Cubierta solar</span>
+          <span class="pj__lugar">
+            <svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>
+            Tenjo · <b>Cundinamarca</b>
+          </span>
+          <span class="pj__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+        </button>
+      </article>
+    </div>
+
+    <p class="pjs__pie reveal">
+      <svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>
+      Trabajamos en <b>Santander, Magdalena y Cundinamarca</b>, y atendemos proyectos en todo el país.
+      <a href="#contacto">Cuéntanos dónde está el tuyo <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </p>
+  </div>
+</section>
 
 
 <!-- ══════════════ SERVICIOS ══════════════ -->
@@ -643,58 +752,73 @@
 </section>
 
 
-<!-- ══════════════ GALERÍA ══════════════ -->
-<section class="sec sec--paper" id="galeria">
+<!-- ══════════════ EQUIPO ══════════════ -->
+<section class="sec sec--paper equipo" id="equipo">
   <div class="wrap">
-    <header class="sec__head reveal">
-      <p class="kicker">Nuestro contenido</p>
-      <h2 class="sec__title">Lo que publicamos <em>en redes</em></h2>
-      <p class="sec__lead">Información clara sobre energía solar, sin letra pequeña. Toca cualquier pieza para verla completa.</p>
-    </header>
+    <div class="equipo__grid">
 
-    <div class="galeria" id="galeria-grid">
-      <button class="gitem gitem--video reveal" type="button" data-video="assets/video/reel-solarup.mp4" data-caption="Reel SolarUp — sistemas solares fotovoltaicos">
-        <img src="assets/video/reel-poster.webp" alt="Reel de SolarUp sobre sistemas solares fotovoltaicos" width="480" height="854" loading="lazy" decoding="async">
-        <span class="gitem__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
-        <span class="gitem__tag">Video</span>
-      </button>
+      <div class="equipo__intro">
+        <header class="sec__head sec__head--left reveal">
+          <p class="kicker">Quiénes lo hacen</p>
+          <h2 class="sec__title">Equipo propio, <em>no subcontratado</em></h2>
+          <p class="sec__lead">
+            El mismo personal que diseña el sistema es el que lo instala y el que vuelve
+            a hacerle mantenimiento. Con dotación, protocolo de trabajo en alturas y
+            entrega documentada según RETIE.
+          </p>
+        </header>
 
-      <button class="gitem reveal" type="button" data-full="assets/img/galeria/bienvenidos.webp" data-caption="Bienvenidos a SolarUp — expertos en infraestructura para soluciones solares inteligentes">
-        <img src="assets/img/galeria/bienvenidos-thumb.webp" alt="Bienvenidos a SolarUp, expertos en infraestructura para soluciones solares inteligentes" width="440" height="589" loading="lazy" decoding="async">
-      </button>
+        <ul class="equipo__marcas reveal">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-bolt"/></svg><span><b>Inversores</b>SRNE · SOLAX</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-battery"/></svg><span><b>Baterías</b>Litio LiFePO₄</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span><b>Garantía</b>Respaldo de fábrica</span></li>
+        </ul>
 
-      <button class="gitem reveal" type="button" data-full="assets/img/galeria/energia-futuro.webp" data-caption="Energía que ilumina tu futuro — paneles solares para hogares, empresas e instituciones">
-        <img src="assets/img/galeria/energia-futuro-thumb.webp" alt="Energía que ilumina tu futuro: paneles solares de alta eficiencia para hogares, empresas e instituciones" width="440" height="753" loading="lazy" decoding="async">
-      </button>
+        <a class="btn btn--outline reveal" href="#contacto">
+          Hablar con el equipo <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
 
-      <button class="gitem reveal" type="button" data-full="assets/img/galeria/cinco-mitos.webp" data-caption="5 mitos sobre paneles solares que debes dejar atrás">
-        <img src="assets/img/galeria/cinco-mitos-thumb.webp" alt="Infografía: 5 mitos sobre paneles solares que debes dejar atrás" width="440" height="660" loading="lazy" decoding="async">
-      </button>
+      <div class="equipo__mosaico reveal">
+        <button class="eq eq--video" type="button"
+                data-video="assets/video/equipo-solarup.mp4"
+                data-caption="El equipo técnico de SolarUp">
+          <img src="assets/video/equipo-solarup.webp"
+               alt="Equipo técnico de SolarUp junto al vehículo de la empresa"
+               width="960" height="540" loading="lazy" decoding="async">
+          <span class="eq__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+          <span class="eq__pie">Nuestro equipo</span>
+        </button>
 
-      <button class="gitem reveal" type="button" data-full="assets/img/galeria/altos-recibos.webp" data-caption="¿Desea dejar de pagar altos recibos de la luz? Le tenemos la solución">
-        <img src="assets/img/galeria/altos-recibos-thumb.webp" alt="¿Desea dejar de pagar altos recibos de la luz? SolarUp le tiene la solución" width="440" height="660" loading="lazy" decoding="async">
-      </button>
+        <figure class="eq">
+          <img src="assets/img/equipo/cuadrilla.webp"
+               alt="Cuadrilla de instaladores de SolarUp con casco y uniforme de la empresa"
+               width="1200" height="675" loading="lazy" decoding="async">
+          <figcaption class="eq__pie">Cuadrilla en obra</figcaption>
+        </figure>
 
-      <button class="gitem reveal" type="button" data-full="assets/img/galeria/beneficios-hogar.webp" data-caption="Beneficios de la energía solar en tu hogar">
-        <img src="assets/img/galeria/beneficios-hogar-thumb.webp" alt="Beneficios de instalar energía solar en el hogar: ahorro, impacto ecológico y valor de la propiedad" width="440" height="589" loading="lazy" decoding="async">
-      </button>
+        <figure class="eq">
+          <img src="assets/img/equipo/equipos.webp"
+               alt="Inversores y banco de baterías de litio instalados en muro"
+               width="1200" height="675" loading="lazy" decoding="async">
+          <figcaption class="eq__pie">Inversores y baterías</figcaption>
+        </figure>
 
-      <button class="gitem reveal" type="button" data-full="assets/img/galeria/genera-tu-energia.webp" data-caption="Empiece a generar su propia energía — diseño, instalación y mantenimiento">
-        <img src="assets/img/galeria/genera-tu-energia-thumb.webp" alt="Empiece a generar su propia energía: diseño, instalación y mantenimiento según RETIE" width="440" height="660" loading="lazy" decoding="async">
-      </button>
+        <figure class="eq">
+          <img src="assets/img/equipo/montaje-rieles.webp"
+               alt="Técnicos montando la estructura de soporte sobre una cubierta metálica"
+               width="1040" height="780" loading="lazy" decoding="async">
+          <figcaption class="eq__pie">Montaje de estructura</figcaption>
+        </figure>
 
-      <button class="gitem reveal" type="button" data-full="assets/img/galeria/aldea-solar.webp" data-caption="Una aldea que aprovecha el sol — SolarUp">
-        <img src="assets/img/galeria/aldea-solar-thumb.webp" alt="Ilustración de una aldea con paneles solares en todos los techos" width="440" height="951" loading="lazy" decoding="async">
-      </button>
-    </div>
+        <figure class="eq">
+          <img src="assets/img/equipo/puesta-en-marcha.webp"
+               alt="Técnicos de SolarUp frente a los equipos ya instalados y en funcionamiento"
+               width="1200" height="675" loading="lazy" decoding="async">
+          <figcaption class="eq__pie">Puesta en marcha</figcaption>
+        </figure>
+      </div>
 
-    <div class="galeria__cta reveal">
-      <a class="btn btn--outline" href="https://www.instagram.com/solarup.sas/" target="_blank" rel="noopener">
-        <svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg> Síguenos en Instagram
-      </a>
-      <a class="btn btn--outline" href="https://www.tiktok.com/@solar.up5" target="_blank" rel="noopener">
-        <svg class="ico" aria-hidden="true"><use href="#i-tiktok"/></svg> Míranos en TikTok
-      </a>
     </div>
   </div>
 </section>
@@ -931,8 +1055,8 @@
         <p class="foot__navTitle">Empresa</p>
         <ul>
           <li><a href="#proceso">Cómo trabajamos</a></li>
-          <li><a href="#calculadora">Calcula tu ahorro</a></li>
-          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#calculadora">Calculadora</a></li>
+          <li><a href="#equipo">Equipo</a></li>
           <li><a href="#faq">Preguntas frecuentes</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
