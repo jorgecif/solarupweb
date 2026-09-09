@@ -302,35 +302,46 @@ b,strong{font-weight:700}
 }
 .hero__bg{position:absolute;inset:0;z-index:-2}
 /* El video se inyecta encima de la foto y aparece cuando ya puede reproducirse,
-   de modo que nunca se ve un hueco negro mientras carga. */
+   de modo que nunca se ve un hueco negro mientras carga. Va a plena opacidad:
+   el protagonista del hero es la instalación, no el degradado. */
 .hero__bg video{
   position:absolute;inset:0;
-  width:100%;height:100%;object-fit:cover;object-position:center 45%;
-  opacity:0;transition:opacity 1s var(--ease);
+  width:100%;height:100%;object-fit:cover;object-position:center 55%;
+  opacity:0;transition:opacity 1.2s var(--ease);
 }
-.hero__bg video.is-playing{opacity:.72}
+.hero__bg video.is-playing{opacity:1}
 .hero__bg img{
   width:100%;height:100%;object-fit:cover;object-position:center 45%;
-  opacity:.72;
 }
-/* Doble degradado: el vertical asienta el bloque sobre negro, el horizontal
-   despeja la izquierda para que el titular mantenga contraste AA. */
+/* Velo mínimo para sostener el contraste del texto sin tapar la imagen:
+   un oscurecido plano suave, más peso solo arriba (bajo la cabecera) y
+   abajo (para fundir con la sección negra que sigue). */
 .hero__bg::after{
   content:"";position:absolute;inset:0;
   background:
-    linear-gradient(180deg,rgba(8,8,10,.8) 0%,rgba(8,8,10,.34) 24%,rgba(8,8,10,.62) 66%,var(--ink) 100%),
-    linear-gradient(90deg,rgba(8,8,10,.93) 0%,rgba(8,8,10,.72) 38%,rgba(8,8,10,.3) 72%,rgba(8,8,10,.45) 100%);
+    linear-gradient(180deg,rgba(8,8,10,.72) 0%,rgba(8,8,10,.12) 26%,rgba(8,8,10,.16) 58%,rgba(8,8,10,.92) 94%,var(--ink) 100%),
+    radial-gradient(ellipse 76% 58% at 50% 52%,rgba(8,8,10,.58) 0%,rgba(8,8,10,.34) 55%,transparent 100%);
 }
 .hero__glow{
   position:absolute;z-index:-1;
-  top:-24%;right:-14%;
-  width:min(78vw,900px);aspect-ratio:1;
-  background:radial-gradient(circle at 50% 50%,rgba(254,211,23,.36) 0%,rgba(254,211,23,.13) 34%,transparent 68%);
-  filter:blur(20px);
+  top:-30%;right:-18%;
+  width:min(66vw,760px);aspect-ratio:1;
+  background:radial-gradient(circle at 50% 50%,rgba(254,211,23,.22) 0%,rgba(254,211,23,.07) 36%,transparent 68%);
+  filter:blur(24px);
   pointer-events:none;
 }
 
-.hero__in{position:relative;max-width:56rem}
+/* Composición centrada, como la referencia: el texto flota sobre el video */
+.hero__in{
+  position:relative;
+  max-width:58rem;
+  margin-inline:auto;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;
+  /* Sombra suave en todo el bloque: sostiene la legibilidad allí donde el
+     video aclara sin necesidad de subir el velo. */
+  text-shadow:0 2px 18px rgba(8,8,10,.7),0 1px 3px rgba(8,8,10,.55);
+}
 
 .eyebrow{
   display:inline-flex;align-items:center;gap:.6rem;
@@ -364,43 +375,47 @@ b,strong{font-weight:700}
   display:block;
   font-style:italic;
   color:var(--sun);
-  text-shadow:0 6px 40px rgba(254,211,23,.28);
 }
 
 .hero__lead{
   margin-top:1.5rem;
-  max-width:40rem;
+  max-width:42rem;
+  margin-inline:auto;
   font-size:clamp(1.04rem,1rem + .42vw,1.28rem);
   color:rgba(255,255,255,.82);
 }
 .hero__lead strong{color:#fff;font-weight:700}
 
 .hero__actions{
-  display:flex;flex-wrap:wrap;gap:.85rem;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem;
   margin-top:2.35rem;
 }
 
 .hero__stats{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:.4rem;
-  margin-top:clamp(2.75rem,5vw,4rem);
-  padding-top:2rem;
-  border-top:1px solid var(--ink-line);
-  max-width:44rem;
+  gap:.4rem 1rem;
+  width:min(100%,46rem);
+  margin:clamp(2.75rem,5vw,3.75rem) auto 0;
+  padding:1.5rem 1.8rem;
+  background:rgba(8,8,10,.42);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--r-lg);
+  backdrop-filter:blur(10px);
+  text-align:center;
 }
 .stat dt{
   font-size:.77rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
-  color:rgba(255,255,255,.48);
+  color:rgba(255,255,255,.62);
   margin-bottom:.25rem;
 }
-.stat dd{display:flex;flex-direction:column;gap:.05rem;margin:0}
+.stat dd{display:flex;flex-direction:column;align-items:center;gap:.05rem;margin:0}
 .stat b{
   font-size:clamp(1.9rem,1.2rem + 2vw,2.65rem);
   font-weight:900;font-style:italic;letter-spacing:-.03em;
   color:var(--sun);line-height:1;
 }
-.stat span{font-size:.87rem;color:rgba(255,255,255,.66);line-height:1.35}
+.stat span{font-size:.87rem;color:rgba(255,255,255,.76);line-height:1.35}
 
 .hero__scroll{
   position:absolute;bottom:1.4rem;left:50%;translate:-50% 0;
@@ -1352,7 +1367,7 @@ body.is-locked{overflow:hidden}
     gap:1.1rem;
     max-width:none;
   }
-  .stat{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:0 .9rem}
+  .stat{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:0 .9rem;text-align:left}
   .stat dt{grid-column:1/-1;margin-bottom:.1rem}
   .stat dd{flex-direction:row;align-items:baseline;gap:.6rem}
   .stat b{font-size:2.15rem}
