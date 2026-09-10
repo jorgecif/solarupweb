@@ -32,8 +32,12 @@
   };
   const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
 
-  /* Ritmo del video de fondo del hero (1 = velocidad original) */
-  const HERO_VELOCIDAD = 0.5;
+  /* Ritmo del video de fondo del hero.
+     Debe quedarse en 1: la cámara lenta va horneada en el archivo, con
+     fotogramas interpolados a 30 fps reales. Bajar este valor NO ralentiza
+     de verdad, solo hace que el navegador repita cada fotograma más tiempo,
+     y el movimiento se percibe a saltos. */
+  const HERO_VELOCIDAD = 1;
 
   /* Preferencias del visitante que condicionan la reproducción automática */
   const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)');
@@ -327,8 +331,6 @@
     // Safari mira el atributo, no solo la propiedad, para permitir el autoplay
     v.setAttribute('muted', '');
     v.setAttribute('aria-hidden', 'true');
-    // A media velocidad: detrás del titular, el movimiento a ritmo normal cansa
-    // la vista. El clip dura 20 s, así que el ciclo pasa a ser de 40 s.
     v.playbackRate = HERO_VELOCIDAD;
     v.src = heroBg.dataset.video;
     v.addEventListener('canplay', () => {

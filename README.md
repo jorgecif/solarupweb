@@ -178,8 +178,25 @@ ffmpeg -ss 3 -i original.mp4 -frames:v 1 -vf scale=960:-2 portada.png
 `-an` quita el audio: son tomas de dron y la reproducción automática exige silencio
 de todas formas. Un clip de 10 s queda en torno a 900 KB.
 
-El video de fondo del hero solo se carga en pantallas de 1024 px o más, y nunca si
-el navegador pide reducir el movimiento o el sistema tiene el ahorro de datos activo.
+### El video de fondo del hero
+
+Solo se carga en pantallas de 1024 px o más, y nunca si el navegador pide reducir el
+movimiento o el sistema tiene el ahorro de datos activo. En móvil se ve únicamente la
+imagen de portada.
+
+**Va a cámara lenta, y esa lentitud está horneada en el archivo.** No la reduzcas con
+`playbackRate`: el navegador no inventa fotogramas, solo mantiene cada uno más tiempo,
+así que un video de 30 fps a `0.5` se ve a 15 fps y el movimiento salta. La cámara
+lenta se genera interpolando fotogramas nuevos, de modo que el archivo son 40 s a
+30 fps reales que se reproducen a velocidad normal:
+
+```bash
+ffmpeg -i VideoGeneral.mp4 -an -vf "scale=1024:-2,setpts=2.0*PTS,minterpolate=fps=30:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1" -c:v libx264 -profile:v main -crf 34 -preset slow -pix_fmt yuv420p -movflags +faststart assets/video/hero-solarup.mp4
+```
+
+`setpts=2.0*PTS` duplica la duración y `minterpolate` rellena los huecos con
+fotogramas intermedios calculados por movimiento. Tarda varios minutos.
+La constante `HERO_VELOCIDAD` de `main.js` debe quedarse en `1`.
 
 ---
 
